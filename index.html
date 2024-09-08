@@ -12,8 +12,8 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            align-items: flex-start;
+            min-height: 100vh;
             direction: rtl;
         }
 
@@ -22,7 +22,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            max-width: 800px;
             width: 100%;
             text-align: right;
         }
@@ -69,11 +69,18 @@
             text-align: center;
         }
 
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* שתי עמודות */
+            gap: 15px; /* רווח בין הכרטיסים */
+        }
+
         .result-box {
             background-color: #ffffff;
             padding: 15px;
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            min-height: 150px; /* גובה מינימלי לכרטיס */
         }
 
         .result-box p {
@@ -86,6 +93,13 @@
         .result-box strong {
             display: block;
             color: #2d572c;
+        }
+
+        .multiple-results-message {
+            text-align: center;
+            color: #2d572c;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         .footer {
@@ -103,11 +117,13 @@
 <div class="container">
     <h1>בדיקת מספר רכב</h1>
     <label for="vehicleNumber">מספר רכב לחיפוש:</label>
-    <input type="text" id="vehicleNumber" placeholder="הכנס מספר רכב (5 ספרות ראשונות)">
+    <input type="text" id="vehicleNumber" placeholder="הכנס מספר רכב">
     <button>בדוק</button>
 
     <h2>תוצאות</h2>
-    <div id="result" class="result-box">
+    <div id="result"></div> <!-- נפריד את הודעת ריבוי התוצאות מרשימת התוצאות -->
+
+    <div class="results-grid" id="resultsGrid">
         <!-- התוצאות יופיעו כאן -->
     </div>
 
@@ -122,7 +138,7 @@
     async function checkVehicle() {
         console.log("הפונקציה פועלת");
 
-        const vehicleNumber = document.getElementById('vehicleNumber').value.slice(0, 5);  // לוקחים רק את 5 הספרות הראשונות
+        const vehicleNumber = document.getElementById('vehicleNumber').value;  // לוקחים את כל המספר שהוזן
         if (!vehicleNumber) {
             console.log("לא הוזן מספר רכב");
             document.getElementById('result').innerHTML = '<p>אנא הזן מספר רכב</p>';
@@ -137,24 +153,35 @@
 
             const vehicleRecords = data.values;
             const result = document.getElementById('result');
+            const resultsGrid = document.getElementById('resultsGrid');
 
             result.innerHTML = '';
+            resultsGrid.innerHTML = ''; // ננקה את התוצאות הקודמות
 
-            // חיפוש על פי 5 הספרות הראשונות בלבד
-            const record = vehicleRecords.find(row => row[0] && row[0].startsWith(vehicleNumber));
+            // חיפוש לפי המספר שהוזן במלואו - מוצאים את כל השורות שמתחילות עם המספר שהוזן
+            const matchingRecords = vehicleRecords.filter(row => row[0] && row[0].startsWith(vehicleNumber));
 
-            if (record) {
-                const approvalExpiry = record[7] ? record[7] : 'ללא הגבלה';  // אם אין תוקף, הצג "ללא הגבלה"
-                result.innerHTML = `
-                    <p><strong>מספר רכב:</strong> ${record[0]}</p>
-                    <p><strong>תוקף האישור:</strong> ${approvalExpiry}</p>
-                    <p><strong>סוג וצבע הרכב:</strong> ${record[1]}</p>
-                    <p><strong>נהג:</strong> ${record[2]}</p>
-                    <p><strong>נהג נוסף:</strong> ${record[3] || 'אין'}</p>
-                    <p><strong>תפקיד/מטרת הגעה:</strong> ${record[4]}</p>
-                    <p><strong>טלפון:</strong> ${record[5]}</p>
-                    <p><strong>נותן האישור:</strong> ${record[6]}</p>
-                `;
+            if (matchingRecords.length > 0) {
+                if (matchingRecords.length > 1) {
+                    result.innerHTML = `<p class="multiple-results-message">יש יותר מתוצאה אחת העונה לחיפוש שביצעת:</p>`;
+                }
+
+                // מציגים את כל הרכבים שמצאנו בשתי עמודות
+                matchingRecords.forEach(record => {
+                    const approvalExpiry = record[7] ? record[7] : 'ללא הגבלה';  // אם אין תוקף, הצג "ללא הגבלה"
+                    resultsGrid.innerHTML += `
+                        <div class="result-box">
+                            <p><strong>מספר רכב:</strong> ${record[0]}</p>
+                            <p><strong>תוקף האישור:</strong> ${approvalExpiry}</p>
+                            <p><strong>סוג וצבע הרכב:</strong> ${record[1]}</p>
+                            <p><strong>נהג:</strong> ${record[2]}</p>
+                            <p><strong>נהג נוסף:</strong> ${record[3] || 'אין'}</p>
+                            <p><strong>תפקיד/מטרת הגעה:</strong> ${record[4]}</p>
+                            <p><strong>טלפון:</strong> ${record[5]}</p>
+                            <p><strong>נותן האישור:</strong> ${record[6]}</p>
+                        </div>
+                    `;
+                });
             } else {
                 console.log("רכב לא נמצא במערכת");
                 result.innerHTML = '<p>הרכב לא נמצא במערכת.</p>';
