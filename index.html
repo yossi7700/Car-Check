@@ -1,197 +1,196 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>בדיקת מספר רכב</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4f7;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            direction: rtl;
+‏<!DOCTYPE html>
+‏<html lang="he" dir="rtl">
+‏<head>
+‏    <meta charset="UTF-8">
+‏    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+‏    <title>בדיקת מספר רכב</title>
+‏    <style>
+‏        body {
+‏            font-family: Arial, sans-serif;
+‏            background-color: #f0f4f7;
+‏            margin: 0;
+‏            padding: 0;
+‏            display: flex;
+‏            justify-content: center;
+‏            align-items: flex-start;
+‏            min-height: 100vh;
+‏            direction: rtl;
         }
 
-        .container {
-            background-color: #d4e9d4;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            width: 100%;
-            text-align: right;
+‏        .container {
+‏            background-color: #d4e9d4;
+‏            padding: 20px;
+‏            border-radius: 10px;
+‏            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+‏            max-width: 800px;
+‏            width: 100%;
+‏            text-align: right;
         }
 
-        h1 {
-            text-align: center;
-            color: #2d572c;
-            margin-bottom: 20px;
+‏        h1 {
+‏            text-align: center;
+‏            color: #2d572c;
+‏            margin-bottom: 20px;
         }
 
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
+‏        label {
+‏            display: block;
+‏            font-weight: bold;
+‏            margin-bottom: 5px;
         }
 
-        input[type="text"], select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
+‏        input[type="tel"], select {
+‏            width: 100%;
+‏            padding: 10px;
+‏            margin-bottom: 15px;
+‏            border: 1px solid #ccc;
+‏            border-radius: 5px;
+‏            font-size: 16px;
         }
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #2d572c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
+‏        button {
+‏            width: 100%;
+‏            padding: 10px;
+‏            background-color: #2d572c;
+‏            color: white;
+‏            border: none;
+‏            border-radius: 5px;
+‏            font-size: 16px;
+‏            cursor: pointer;
         }
 
-        button:hover {
-            background-color: #1e3d1f;
+‏        button:hover {
+‏            background-color: #1e3d1f;
         }
 
-        h2 {
-            color: #2d572c;
-            margin-top: 20px;
-            text-align: center;
+‏        h2 {
+‏            color: #2d572c;
+‏            margin-top: 20px;
+‏            text-align: center;
         }
 
-        .results-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* שתי עמודות */
-            gap: 15px; /* רווח בין הכרטיסים */
+‏        .results-grid {
+‏            display: grid;
+‏            grid-template-columns: 1fr 1fr; /* שתי עמודות */
+‏            gap: 15px; /* רווח בין הכרטיסים */
         }
 
-        .result-box {
-            background-color: #ffffff;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            min-height: 150px; /* גובה מינימלי לכרטיס */
+‏        .result-box {
+‏            background-color: #ffffff;
+‏            padding: 15px;
+‏            border-radius: 5px;
+‏            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+‏            min-height: 150px; /* גובה מינימלי לכרטיס */
         }
 
-        .result-box p {
-            margin: 10px 0;
-            padding: 5px;
-            background-color: #f4f4f4;
-            border-radius: 3px;
+‏        .result-box p {
+‏            margin: 10px 0;
+‏            padding: 5px;
+‏            background-color: #f4f4f4;
+‏            border-radius: 3px;
         }
 
-        .result-box strong {
-            display: block;
-            color: #2d572c;
+‏        .result-box strong {
+‏            display: block;
+‏            color: #2d572c;
         }
 
-        .multiple-results-message {
-            text-align: center;
-            color: #2d572c;
-            font-weight: bold;
-            margin-bottom: 20px;
+‏        .multiple-results-message {
+‏            text-align: center;
+‏            color: #2d572c;
+‏            font-weight: bold;
+‏            margin-bottom: 20px;
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 18px;
-            color: #2d572c;
-            font-weight: bold;
+‏        .footer {
+‏            text-align: center;
+‏            margin-top: 20px;
+‏            font-size: 18px;
+‏            color: #2d572c;
+‏            font-weight: bold;
         }
 
-    </style>
-</head>
-<body>
+‏    </style>
+‏</head>
+‏<body>
 
-<div class="container">
-    <h1>בדיקת מספר רכב</h1>
-    <label for="vehicleNumber">מספר רכב לחיפוש:</label>
-    <input type="text" id="vehicleNumber" placeholder="הכנס מספר רכב (5 ספרות ראשונות או יותר)">
-    <button>בדוק</button>
+‏<div class="container">
+‏    <h1>בדיקת מספר רכב</h1>
+‏    <label for="vehicleNumber">מספר רכב לחיפוש:</label>
+‏    <input type="tel" id="vehicleNumber" placeholder="הכנס מספר רכב">
+‏    <button>בדוק</button>
 
-    <h2>תוצאות</h2>
-    <div id="result"></div> <!-- נפריד את הודעת ריבוי התוצאות מרשימת התוצאות -->
+‏    <h2>תוצאות</h2>
+‏    <div id="result"></div> <!-- נפריד את הודעת ריבוי התוצאות מרשימת התוצאות -->
 
-    <div class="results-grid" id="resultsGrid">
+‏    <div class="results-grid" id="resultsGrid">
         <!-- התוצאות יופיעו כאן -->
-    </div>
+‏    </div>
 
-    <div class="footer">
+‏    <div class="footer">
         חמ"ל: 052-959-0519
-    </div>
-</div>
+‏    </div>
+‏</div>
 
-<script>
-    document.querySelector('button').addEventListener('click', checkVehicle);
+‏<script>
+‏    document.querySelector('button').addEventListener('click', checkVehicle);
 
-    async function checkVehicle() {
-        console.log("הפונקציה פועלת");
+‏    async function checkVehicle() {
+‏        console.log("הפונקציה פועלת");
 
-        const vehicleNumber = document.getElementById('vehicleNumber').value;  // לוקחים את כל המספר שהוזן
-        if (!vehicleNumber) {
-            console.log("לא הוזן מספר רכב");
-            document.getElementById('result').innerHTML = '<p>אנא הזן מספר רכב</p>';
-            return;
+‏        const vehicleNumber = document.getElementById('vehicleNumber').value;  // לוקחים את כל המספר שהוזן
+‏        if (!vehicleNumber) {
+‏            console.log("לא הוזן מספר רכב");
+‏            document.getElementById('result').innerHTML = '<p>אנא הזן מספר רכב</p>';
+‏            return;
         }
 
-        const url = 'https://sheets.googleapis.com/v4/spreadsheets/18vxhE3WWq6MLzvRw7md6CJaH5jV_to0FX4I237GMqDs/values/נתונים!B:I?key=AIzaSyA6KN_6PzpJTtlYwzMFG0mVts8tlUF2Vnw';
+‏                const url = 'https://sheets.googleapis.com/v4/spreadsheets/18vxhE3WWq6MLzvRw7md6CJaH5jV_to0FX4I237GMqDs/values/נתונים!B:I?key=AIzaSyA6KN_6PzpJTtlYwzMFG0mVts8tlUF2Vnw';
+‏        try {
+‏            const response = await fetch(url);
+‏            const data = await response.json();
 
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
+‏            const vehicleRecords = data.values;
+‏            const result = document.getElementById('result');
+‏            const resultsGrid = document.getElementById('resultsGrid');
 
-            const vehicleRecords = data.values;
-            const result = document.getElementById('result');
-            const resultsGrid = document.getElementById('resultsGrid');
-
-            result.innerHTML = '';
-            resultsGrid.innerHTML = ''; // ננקה את התוצאות הקודמות
+‏            result.innerHTML = '';
+‏            resultsGrid.innerHTML = ''; // ננקה את התוצאות הקודמות
 
             // חיפוש לפי המספר שהוזן במלואו - מוצאים את כל השורות שמתחילות עם המספר שהוזן
-            const matchingRecords = vehicleRecords.filter(row => row[0] && row[0].startsWith(vehicleNumber));
+‏            const matchingRecords = vehicleRecords.filter(row => row[0] && row[0].startsWith(vehicleNumber));
 
-            if (matchingRecords.length > 0) {
-                if (matchingRecords.length > 1) {
-                    result.innerHTML = `<p class="multiple-results-message">יש יותר מתוצאה אחת העונה לחיפוש שביצעת:</p>`;
+‏            if (matchingRecords.length > 0) {
+‏                if (matchingRecords.length > 1) {
+‏                    result.innerHTML = `<p class="multiple-results-message">יש יותר מתוצאה אחת העונה לחיפוש שביצעת:</p>`;
                 }
 
                 // מציגים את כל הרכבים שמצאנו בשתי עמודות
-                matchingRecords.forEach(record => {
-                    const approvalExpiry = record[7] ? record[7] : 'ללא הגבלה';  // אם אין תוקף, הצג "ללא הגבלה"
-                    resultsGrid.innerHTML += `
-                        <div class="result-box">
-                            <p><strong>מספר רכב:</strong> ${record[0]}</p>
-                            <p><strong>תוקף האישור:</strong> ${approvalExpiry}</p>
-                            <p><strong>סוג וצבע הרכב:</strong> ${record[1]}</p>
-                            <p><strong>נהג:</strong> ${record[2]}</p>
-                            <p><strong>נהג נוסף:</strong> ${record[3] || 'אין'}</p>
-                            <p><strong>תפקיד/מטרת הגעה:</strong> ${record[4]}</p>
-                            <p><strong>טלפון:</strong> ${record[5]}</p>
-                            <p><strong>נותן האישור:</strong> ${record[6]}</p>
-                        </div>
+‏                matchingRecords.forEach(record => {
+‏                    const approvalExpiry = record[7] ? record[7] : 'ללא הגבלה';  // אם אין תוקף, הצג "ללא הגבלה"
+‏                    resultsGrid.innerHTML += `
+‏                        <div class="result-box">
+‏                            <p><strong>מספר רכב:</strong> ${record[0]}</p>
+‏                            <p><strong>תוקף האישור:</strong> ${approvalExpiry}</p>
+‏                            <p><strong>סוג וצבע הרכב:</strong> ${record[1]}</p>
+‏                            <p><strong>נהג:</strong> ${record[2]}</p>
+‏                            <p><strong>נהג נוסף:</strong> ${record[3] || 'אין'}</p>
+‏                            <p><strong>תפקיד/מטרת הגעה:</strong> ${record[4]}</p>
+‏                            <p><strong>טלפון:</strong> ${record[5]}</p>
+‏                            <p><strong>נותן האישור:</strong> ${record[6]}</p>
+‏                        </div>
                     `;
                 });
-            } else {
-                console.log("רכב לא נמצא במערכת");
-                result.innerHTML = '<p>הרכב לא נמצא במערכת.</p>';
+‏            } else {
+‏                console.log("רכב לא נמצא במערכת");
+‏                result.innerHTML = '<p>הרכב לא נמצא במערכת.</p>';
             }
-        } catch (error) {
-            console.error('שגיאה:', error);
-            result.innerHTML = '<p>שגיאה בשליפת הנתונים, אנא נסה שוב.</p>';
+‏        } catch (error) {
+‏            console.error('שגיאה:', error);
+‏            result.innerHTML = '<p>שגיאה בשליפת הנתונים, אנא נסה שוב.</p>';
         }
     }
-</script>
+‏</script>
 
-</body>
-</html>
+‏</body>
+‏</html>
